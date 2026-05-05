@@ -1,8 +1,9 @@
-package com.ecommerce.config;
+package com.ecommerce.controller;
 
 import com.ecommerce.model.RecommendationRequest;
 import com.ecommerce.model.RecommendationResponse;
 import com.ecommerce.orchestrator.SupervisorOrchestrator;
+import com.ecommerce.orchestrator.SupervisorOrchestratorGraph;
 import com.ecommerce.service.ABTestService;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,15 +15,18 @@ public class RecommendationController {
 
     private final SupervisorOrchestrator orchestrator;
     private final ABTestService abTestService;
+    private final SupervisorOrchestratorGraph orchestratorGraph;
 
-    public RecommendationController(SupervisorOrchestrator orchestrator, ABTestService abTestService) {
+    public RecommendationController(SupervisorOrchestrator orchestrator, ABTestService abTestService, SupervisorOrchestratorGraph orchestratorGraph) {
         this.orchestrator = orchestrator;
         this.abTestService = abTestService;
+        this.orchestratorGraph = orchestratorGraph;
     }
 
     @PostMapping("/recommend")
     public RecommendationResponse recommend(@RequestBody RecommendationRequest request) {
-        return orchestrator.recommend(request);
+//        return orchestrator.recommend(request);
+        return orchestratorGraph.recommend(request);
     }
 
     @GetMapping("/health")
